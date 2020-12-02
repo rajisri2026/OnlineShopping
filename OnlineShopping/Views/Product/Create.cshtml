@@ -1,0 +1,69 @@
+﻿@model IEnumerable<OnlineShopping.ViewModel.CategoryViewModel>
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+<form id="createProduct">
+
+
+    <hr />
+
+    <label>Category</label>
+    <select name="CategoryId">
+
+        @foreach (var category in Model)
+        {
+
+            <option value="@category.CategoryId">@category.CategoryName</option>
+
+        }
+
+    </select>
+    <br />
+    <label>Name</label>
+
+    <input name="ProductName" />
+    <br />
+    <label>Description</label>
+
+    <input name="Description" />
+    <br />
+    <label>Price</label>
+
+    <input name="Price" />
+    <br />
+    <label>Stock</label>
+
+    <input name="Stock" />
+    <br />
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button id="saveBtn" type="button">Create</button>
+        </div>
+    </div>
+</form>
+
+
+<script>
+    $("#saveBtn").click(function () {
+        
+        $.ajax({
+            type:'POST',
+            url: '/Product/Create',
+            data: $("#createProduct").serialize()
+        })
+            .done(function (data) {
+                $("#tableContainer").html(data);
+                $("#actionContainer").html("");
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Failed!");
+            })
+    });
+</script>
+@*<div>
+    @Html.ActionLink("Back to List", "ProductsList")
+</div>*@

@@ -1,0 +1,122 @@
+﻿@model IEnumerable<OnlineShopping.ViewModel.CategoryViewModel>
+
+@{
+    ViewBag.Title = "CategoryList";
+}
+
+<h2>Category List</h2>
+<div>
+    @using (Html.BeginForm())
+    {
+        <input id="searchTxt" name="search" />
+        <button type="button" id="searchBtn">Search</button>
+        <button type="button" id="newBtn">New</button>
+    }
+</div>
+
+<table class="table">
+    <tr>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImageURL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.isFeatured)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageURL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.isFeatured)
+            </td>
+            <td>
+                <button class="editBtn" data-id="@item.CategoryId">Edit</button>
+                <button class="deleteBtn" data-id="@item.CategoryId">Delete</button>
+            </td>
+        </tr>
+    }
+
+</table>
+<script>
+
+    $("#searchBtn").click(function () {
+        var searchValue = $("#searchTxt").val();
+        $.ajax({
+            url: '/Category/CategoryList',
+            data: {
+                search: searchValue
+            }
+        })
+            .done(function (data) {
+                $("#tableContainer").html(data);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Failed!");
+            })
+    });
+
+    $("#newBtn").click(function () {
+
+        $.ajax({
+            url: '/Category/Create',
+            type:'GET'
+           })
+            .done(function (data) {
+                $("#actionContainer").html(data);
+                focusAction("actionContainer");
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Failed!");
+            })
+    });
+    $(".editBtn").click(function () {
+
+        $.ajax({
+            url: '/Category/Edit',
+            data: {
+                id: $(this).attr('data-id')
+            }
+        })
+            .done(function (data) {
+                $("#actionContainer").html(data);
+                focusAction("actionContainer");
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Failed!");
+            })
+    });
+
+    $(".deleteBtn").click(function () {
+
+        var confirmDelete = confirm("Are you sure to delete the selected product?");
+        if (confirmDelete) {
+            $.ajax({
+                type: 'POST',
+                url: '/Category/Delete',
+                data: {
+                    id: $(this).attr('data-id')
+                }
+            })
+                .done(function (data) {
+                    $("#tableContainer").html(data);
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Failed!");
+                })
+        }
+
+    });
+</script>

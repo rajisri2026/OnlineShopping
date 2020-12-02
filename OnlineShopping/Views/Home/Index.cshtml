@@ -1,0 +1,41 @@
+﻿@model OnlineShopping.ViewModel.HomeViewModel
+
+@{
+    ViewBag.Title = "Index";
+    var firstCategory = Model.FeaturedCategories.ElementAt(0);
+    var secondCategory = Model.FeaturedCategories.ElementAt(1);
+    var thirdCategory = Model.FeaturedCategories.ElementAt(2);
+}
+
+<h2>Index</h2>
+<!-- IMAGE BOX -->
+<div class="container">
+    <div class="col-sm-6 col-md-4">
+
+        <img src="@firstCategory.ImageURL" alt="Image" height="250px" width="250px">
+        <div class="elm-btn">
+            <a href="#">@firstCategory.CategoryName</a>
+        </div>
+
+    </div>
+    <div class="col-sm-6 col-md-4">
+
+        <img src="@secondCategory.ImageURL" alt="Image" height="250px" width="250px">
+        <div class="elm-btn">
+            <a href="#">@secondCategory.CategoryName</a>
+        </div>
+
+    </div>
+    <div class="col-sm-6 col-md-4">
+
+        <img src="@thirdCategory.ImageURL" alt="Image" height="250px" width="250px">
+        <div class="elm-btn">
+            <a href="#">@thirdCategory.CategoryName</a>
+        </div>
+
+    </div>
+    
+  
+</div>
+                       
+                

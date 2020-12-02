@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+<form id="createCategory">
+
+
+    <hr />
+    <label>Name</label>
+
+    <input name="CategoryName" />
+    <br />
+
+    <div class="form-group">
+        <label>Is Featured?</label>
+        <input name="isFeatured" type="radio" value="True" /> True
+        <input name="isFeatured" type="radio" value="False" /> False
+          
+    </div>
+    <br/>
+
+    <div class="form-group">
+        <label>Image</label>
+        <input type="hidden" id="ImageURL" name="ImageURL" />
+        <input class="form-control" id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
+    </div>
+
+    <br />
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button id="saveBtn" type="button">Create</button>
+        </div>
+    </div>
+</form>
+
+
+<script>
+    $("#saveBtn").click(function () {
+
+        $.ajax({
+            type: 'POST',
+            url: '/Category/Create',
+            data: $("#createCategory").serialize()
+        })
+            .done(function (data) {
+                $("#tableContainer").html(data);
+                $("#actionContainer").html("");
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Failed!");
+            })
+    });
+</script>

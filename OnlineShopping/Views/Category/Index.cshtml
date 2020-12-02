@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+
+<div id="tableContainer">
+    @{
+        Html.RenderAction("CategoryList");
+    }
+</div>
+
+<div id="actionContainer">
+
+</div>
+
+<script>
+	function focusAction(controlToFocus) {
+		$('html, body').animate({
+			scrollTop: $("#" + controlToFocus).offset().top - 100
+		}, 1000);
+	}
+</script>
