@@ -106,15 +106,7 @@ else
 }
 
 <script>
-    debugger;
-    var currentQuantity = $(".qty").val();
-    if (currentQuantity == 1) {
-        debugger;
-        $(".minusBtn").prop("disabled", true);
-    }
     $(".minusBtn").click(function () {
-        debugger;
-
         $.ajax({
             type: 'POST',
             url: '/Cart/DecreaseQuantity',
@@ -131,7 +123,6 @@ else
             })
     });
     $(".plusBtn").click(function () {
-        debugger;
         $.ajax({
             type: 'POST',
             url: '/Cart/IncreaseQuantity',
