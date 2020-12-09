@@ -24,7 +24,7 @@ namespace OnlineShopping.Repository
 
         public IEnumerable<Category> GetFeaturedCategories()
         {
-            return onlineShoppingDbContext.Categories.Where(x=>x.isFeatured && x.ImageURL != null).ToList();
+            return onlineShoppingDbContext.Categories.Where(x => x.isFeatured && x.ImageURL != null).ToList();
 
         }
 

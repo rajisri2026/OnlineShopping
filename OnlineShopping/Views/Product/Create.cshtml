@@ -7,43 +7,55 @@
 <h2>Create</h2>
 
 <form id="createProduct">
-
-
-    <hr />
-
-    <label>Category</label>
-    <select name="CategoryId">
-
-        @foreach (var category in Model)
-        {
-
-            <option value="@category.CategoryId">@category.CategoryName</option>
-
-        }
-
-    </select>
-    <br />
-    <label>Name</label>
-
-    <input name="ProductName" />
-    <br />
-    <label>Description</label>
-
-    <input name="Description" />
-    <br />
-    <label>Price</label>
-
-    <input name="Price" />
-    <br />
-    <label>Stock</label>
-
-    <input name="Stock" />
-    <br />
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <button id="saveBtn" type="button">Create</button>
+    <div class="form-horizontal">
+        <hr />
+        <div class="form-group">
+            <label class = "control-label col-md-2">Category</label>
+            <select name="CategoryId" class = "form-control">
+                
+                @foreach (var category in Model)
+                {
+                   
+                        <option value="@category.CategoryId">@category.CategoryName</option>
+                }
+                </select>
         </div>
-    </div>
+
+        <br />
+        <div class="form-group">
+            <label class = "control-label col-md-2">Name</label>
+            <div class="col-md-10">
+                <input name="ProductName" class = "form-control" />
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <label class = "control-label col-md-2">Description</label>
+            <div class="col-md-10">
+                <input name="Description" class = "form-control" />
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <label class = "control-label col-md-2" >Price</label>
+            <div class="col-md-10">
+                <input name="Price" class = "form-control" />
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <label class = "control-label col-md-2">Stock</label>
+            <div class="col-md-10">
+                <input name="Stock" class = "form-control"/>
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button id="saveBtn" type="button">Create</button>
+            </div>
+        </div>
+        </div>
 </form>
 
 

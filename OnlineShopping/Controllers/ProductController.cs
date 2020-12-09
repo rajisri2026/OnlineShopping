@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace OnlineShopping.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [AllowAnonymous]
     public class ProductController : Controller
     {
         ProductServices productServices = new ProductServices();

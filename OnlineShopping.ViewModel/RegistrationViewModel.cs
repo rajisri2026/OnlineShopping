@@ -14,10 +14,11 @@ namespace OnlineShopping.ViewModel
         [Required]
         [Display(Name = "First Name")]
         [StringLength(50, MinimumLength = 3)]
-        [RegularExpression(@"^([A-Z]{1})[a-z]+", ErrorMessage = "Numbers not allowed")]
+        [RegularExpression(@"^([A-Z]{1})[a-z]+", ErrorMessage = "Invalid name")]
         public string FirstName { get; set; }
 
         [StringLength(20, MinimumLength = 1)]
+        [RegularExpression(@"^([A-Z]{1})[a-z]+", ErrorMessage = "Invalid name")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
@@ -31,6 +32,9 @@ namespace OnlineShopping.ViewModel
 
         [Required]
         [DataType(DataType.Password)]
+       // [RegularExpression(@"((?=.{3,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*\s]))", ErrorMessage = "Invalid Password format")]
+        //[RegularExpression(@"(?=.{3,})(?=.*\d)(?=.*\W)", ErrorMessage = "Invalid Password")]
+        [RegularExpression(@"^(?=.*[a - z])(?=.*[A - Z])(?=.*\d)(?=.*[^\da - zA - Z]).{4, 15}$", ErrorMessage = "Invalid Password format")]
         public string Password { get; set; }
 
         [Required]

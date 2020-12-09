@@ -1,0 +1,175 @@
+﻿@model IEnumerable<OnlineShopping.ViewModel.CartViewModel>
+
+@{
+    ViewBag.Title = "ShowCart";
+}
+
+@if (Model != null && Model.Count() != 0)
+{
+
+    <table class="table">
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ProductId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+
+            <th>
+                <label>Total Price</label>
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            if (Session["uname"] != null)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        <div>
+                            <button type="button" class="minusBtn" product-id="@item.ProductId" cart-id="@item.CartId">-</button>
+                            <input type="number" value="@item.Quantity" class="qty" min="1" style="width:50px" />
+                            <button type="button" class="plusBtn" product-id="@item.ProductId" cart-id="@item.CartId">+</button>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" id="totalPrice" value="@(item.Quantity*item.Product.Price)" readonly="readonly" />
+
+                    </td>
+                    <td>
+                        <button class="removeFromCart btn-danger" data-id="@item.ProductId" cart-id="@item.CartId">Remove</button>
+                    </td>
+                </tr>
+            }
+
+            else
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        <div>
+                            <button type="button" product-id="@item.ProductId" cart-id="@item.CartId" class="minusBtn">-</button>
+                            <input type="number" readonly="readonly" value="@item.Quantity" class="qty" style="width:50px" />
+                            <button type="button" class="plusBtn" product-id="@item.ProductId" cart-id="@item.CartId">+</button>
+                        </div>
+                        @*<input type="number" style="width:50px" class="qtyField" value="@item.Quantity" min="1"/>*@
+                    </td>
+                    <td>
+                        <input type="number" id="totalPrice" value="@(item.Quantity*item.Price)" readonly="readonly" />
+
+                    </td>
+                    <td>
+                        <button class="removeFromCart btn-danger" data-id="@item.ProductId" cart-id="@item.CartId">Remove</button>
+                    </td>
+                </tr>
+            }
+        }
+        <tr>
+            <td colspan="6">
+                @Html.ActionLink("Continue Shopping", "Index", "Product")
+            </td>
+        </tr>
+    </table>
+
+}
+
+else
+{
+    <h1>No items in cart</h1>
+    @Html.ActionLink("Continue Shopping", "Index", "Product");
+}
+
+<script>
+    debugger;
+    var currentQuantity = $(".qty").val();
+    if (currentQuantity == 1) {
+        debugger;
+        $(".minusBtn").prop("disabled", true);
+    }
+    $(".minusBtn").click(function () {
+        debugger;
+
+        $.ajax({
+            type: 'POST',
+            url: '/Cart/DecreaseQuantity',
+            data: {
+                cartId: $(this).attr('cart-id'),
+                productId: $(this).attr('product-id')
+            }
+        })
+            .done(function (data) {
+                $("#cartPage").html(data);
+            })
+            .fail(function () {
+                alert("Failed to decrease product quantity !");
+            })
+    });
+    $(".plusBtn").click(function () {
+        debugger;
+        $.ajax({
+            type: 'POST',
+            url: '/Cart/IncreaseQuantity',
+            data: {
+                cartId: $(this).attr('cart-id'),
+                productId: $(this).attr('product-id')
+            }
+        })
+            .done(function (data) {
+                $("#cartPage").html(data);
+            })
+            .fail(function () {
+                alert("Failed to increase product quantity !");
+            })
+    });
+
+    $(".removeFromCart").click(function () {
+
+        var confirmDelete = confirm("Are you sure to remove the selected item from cart ?");
+        if (confirmDelete) {
+            $.ajax({
+                type: 'POST',
+                url: '/Cart/RemoveFromCart',
+                data: {
+                    cartId: $(this).attr('cart-id'),
+                    productId: $(this).attr('data-id')
+                }
+            })
+                .done(function (data) {
+                    $("#cartPage").html(data);
+
+                })
+                .fail(function () {
+                    alert("Failed to remove from cart !");
+                })
+        }
+        
+
+    });
+
+</script>

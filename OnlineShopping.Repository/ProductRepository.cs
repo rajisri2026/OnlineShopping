@@ -43,6 +43,10 @@ namespace OnlineShopping.Repository
         {
             return onlineShoppingDbContext.Products.Find(id);
         }
+        public List<Product> GetProducts(List<int> ids)
+        {
+            return onlineShoppingDbContext.Products.Where(x => ids.Contains(x.ProductId)).ToList();
+        }
         public void Save()
         {
             onlineShoppingDbContext.SaveChanges();

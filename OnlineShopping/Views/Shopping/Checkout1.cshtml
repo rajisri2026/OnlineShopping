@@ -1,0 +1,28 @@
+﻿@*@model OnlineShopping.ViewModel.CheckoutViewModel
+
+@if(Model != null)
+{
+    if(Model.CartProducts != null && Model.CartProducts.Count > 0)
+    {
+        <div>
+            @foreach (var product in Model.CartProducts)
+            {
+                var quantity = Model.CartProductIDs.Where(x => x == product.ProductId).Count();
+                <div>
+                    Name:@product.ProductName Price:@product.Price Quantity: @quantity Total Price: @(product.Price*quantity)
+                </div>
+            }
+        </div>
+        <div>
+            Total Bill: @Model.CartProducts.Sum(x=>x.Price * Model.CartProductIDs.Where(productID => productID == x.ProductId).Count())
+        </div>
+    }
+    else
+    {
+        <div>
+            No products in your cart!
+        </div>
+    }
+}*@
+
+

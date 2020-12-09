@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CartRepository.cs" />
     <Compile Include="CategoryRepository.cs" />
     <Compile Include="ProductRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -69,6 +70,17 @@
       <Project>{ed828ffb-007c-409f-bef7-69826fabb669}</Project>
       <Name>OnlineShopping.DomainLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OnlineShopping.ViewModel\OnlineShopping.ViewModel.csproj">
+      <Project>{8668A5FE-8554-4B21-86EE-1075C891DF5C}</Project>
+      <Name>OnlineShopping.ViewModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\jquery-1.4.4-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.4.4.js" />
+    <Content Include="Scripts\jquery-1.4.4.min.js" />
+    <Content Include="Scripts\jquery.cookie-1.4.1.min.js" />
+    <Content Include="Scripts\jquery.cookie.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

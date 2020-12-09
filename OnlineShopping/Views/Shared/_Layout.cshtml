@@ -3,10 +3,15 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Gratitude -Online Shopping</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
+    @*<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>*@
+
+    <script src="~/Content/alertify.js-0.3.11/alertify.js-0.3.11/lib/alertify.min.js"></script>
+    <link href="~/Content/alertify.js-0.3.11/alertify.js-0.3.11/themes/alertify.default.css" rel="stylesheet" />
+    <link href="~/Content/alertify.js-0.3.11/alertify.js-0.3.11/themes/alertify.core.css" rel="stylesheet" />
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -24,14 +29,16 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Products List", "Index", "Product")</li>
+
+                    <li>@Html.ActionLink("Category List", "Index", "Category")</li>
+                    <li>@Html.ActionLink("Cart(" + Session["CartCounter"] + ")", "Index", "Cart")</li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Products List", "Index", "Product")</li>
                         if (User.IsInRole("Admin"))
                         {
                             <li>@Html.ActionLink("Users List", "UserDetails", "User")</li>
                         }
-
 
                         <li><a>Hello @User.Identity.Name</a></li>
                         <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
@@ -43,12 +50,12 @@
                         <li>@Html.ActionLink("Login", "Login", "Account")</li>
                     }
 
-
                 </ul>
+            
             </div>
         </div>
     </div>
-    
+
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -57,7 +64,7 @@
         </footer>
     </div>
 
-   
+    @*<link href="~/Content/sweetalert/sweet-alert.css" rel="stylesheet" />*@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

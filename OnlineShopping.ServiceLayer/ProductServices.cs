@@ -9,11 +9,23 @@ namespace OnlineShopping.ServiceLayer
     public class ProductServices
     {
         ProductRepository productRepository;
-        CategoryRepository categoryRepository;
         public ProductServices()
         {
             productRepository = new ProductRepository();
-            categoryRepository = new CategoryRepository();
+        }
+        public ProductViewModel ProductToProductViewModelMapper(Product product)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductViewModel>());
+            var mapper = config.CreateMapper();
+            ProductViewModel productViewModel = mapper.Map<ProductViewModel>(product);
+            return productViewModel;
+        }
+        public Product ProductViewModelToProductMapper(ProductViewModel productViewModel)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<ProductViewModel, Product>());
+            var mapper = config.CreateMapper();
+            Product product = mapper.Map<Product>(productViewModel);
+            return product;
         }
         public IEnumerable<ProductViewModel> DisplayAll()
         {
@@ -40,9 +52,16 @@ namespace OnlineShopping.ServiceLayer
         public ProductViewModel Detail(int id)
         {
             Product product = productRepository.Detail(id);
+            ProductViewModel productViewModel = ProductToProductViewModelMapper(product);
+            return productViewModel;
+        }
+
+        public List<ProductViewModel> GetProducts(List<int> ids)
+        {
+            List<Product> products = productRepository.GetProducts(ids);
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductViewModel>());
             var mapper = config.CreateMapper();
-            ProductViewModel productViewModel = mapper.Map<ProductViewModel>(product);
+            List<ProductViewModel> productViewModel = mapper.Map<List<ProductViewModel>>(products);
             return productViewModel;
         }
         public void Delete(int id)

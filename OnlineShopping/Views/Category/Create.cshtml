@@ -6,34 +6,43 @@
 <h2>Create</h2>
 
 <form id="createCategory">
+    <div class="form-horizontal">
 
+        <hr />
+        <div class="form-group">
+            <label class="control-label col-md-2">Name</label>
+            <div class="col-md-10">
+                <input name="CategoryName" />
+            </div>
+            </div>
+            <br />
 
-    <hr />
-    <label>Name</label>
+            <div class="form-group">
+                <label class="control-label col-md-2">Is Featured?</label>
+                <div class="col-md-10">
+                    
+                        <input name="isFeatured" type="radio" value="True" /> True
+                    
+                        <input name="isFeatured" type="radio" value="False" /> False
+                    </div>
+                </div>
+           
+            <br />
 
-    <input name="CategoryName" />
-    <br />
-
-    <div class="form-group">
-        <label>Is Featured?</label>
-        <input name="isFeatured" type="radio" value="True" /> True
-        <input name="isFeatured" type="radio" value="False" /> False
-          
-    </div>
-    <br/>
-
-    <div class="form-group">
-        <label>Image</label>
-        <input type="hidden" id="ImageURL" name="ImageURL" />
-        <input class="form-control" id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
-    </div>
-
-    <br />
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <button id="saveBtn" type="button">Create</button>
+            <div class="form-group">
+                <label class="control-label col-md-2">Image</label>
+                <div class="col-md-10">
+                    <input type="hidden" id="ImageURL" name="ImageURL" />
+                    <input id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button id="saveBtn" type="button">Create</button>
+                </div>
+            </div>
         </div>
-    </div>
 </form>
 
 

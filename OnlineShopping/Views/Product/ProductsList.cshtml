@@ -5,13 +5,16 @@
 }
 
 <h2>Products List</h2>
-
 <div>
     @using (Html.BeginForm())
     {
         <input id="searchTxt" name="search" />
         <button type="button" id="searchBtn">Search</button>
-        <button type="button" id="newBtn">New</button>
+        if (User.IsInRole("Admin"))
+        {
+            <button type="button" id="newBtn">New</button>
+        }
+
     }
 </div>
 
@@ -38,28 +41,40 @@
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProductName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Stock)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
-                </td>
-                <td>
-                    <button class="editBtn" data-id="@item.ProductId">Edit</button>
-                    <button class="deleteBtn" data-id="@item.ProductId">Delete</button>
-                    
-                </td>
-            </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Stock)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+        </td>
+
+
+        @if (User.IsInRole("Admin"))
+        {
+            <td>
+                <button class="editBtn" data-id="@item.ProductId">Edit</button>
+                <button class="deleteBtn" data-id="@item.ProductId">Delete</button>
+
+            </td>
+        }
+        else
+        {
+            <td>
+                <button class="addToCartBtn" data-id="@item.ProductId">Add to cart</button>
+            </td>
+        }
+
+    </tr>
         }
 
     </table>
@@ -83,11 +98,11 @@
     });
 
     $("#newBtn").click(function () {
-        
+
         $.ajax({
             url: '/Product/Create',
-            type:'GET'
-           })
+            type: 'GET'
+        })
             .done(function (data) {
                 $("#actionContainer").html(data);
                 focusAction("actionContainer");
@@ -131,7 +146,27 @@
                     alert("Failed!");
                 })
         }
-        
+
     });
+    $(".addToCartBtn").click(function () {
+        debugger;
+        var itemID = $(this).attr('data-id');
+        
+        $.ajax({
+
+            data: {
+                id: itemID
+            },
+            url:'/Cart/AddToCart'
+        })
+            .done(function (data) {
+                swal("Done!", "Product added to cart!", "success");
+            })
+            .fail(function () {
+                alert("Failed to Add!");
+            })
+        
+    })
+    
 </script>
 
