@@ -151,7 +151,6 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\css\LoginStyleSheet.css" />
     <Content Include="Content\images\login-bg.jpg" />
     <Content Include="Content\images\ui-icons_444444_256x240.png" />
     <Content Include="Content\images\ui-icons_555555_256x240.png" />
@@ -209,14 +208,13 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Category\CategoryList.cshtml" />
     <Content Include="Views\Cart\ShowCart.cshtml" />
-    <Content Include="Views\Account\LoginUI.cshtml" />
     <Content Include="Views\User\UpdateProfile.cshtml" />
     <Content Include="Views\User\ChangePassword.cshtml" />
-    <Content Include="Views\Account\Login1.cshtml" />
     <Content Include="Views\Shopping\ShowCheckoutPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\css\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
