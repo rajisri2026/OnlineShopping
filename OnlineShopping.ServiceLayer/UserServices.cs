@@ -30,32 +30,47 @@ namespace OnlineShopping.ServiceLayer
             IEnumerable<Role> role = userRepository.GetRoles();
             return role;
         }
-        public void Create(UserViewModel userViewModel)
+        public UserViewModel UserToUserViewModelMapper(User user)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<User, UserViewModel>());
+            var mapper = config.CreateMapper();
+            UserViewModel userViewModel = mapper.Map<UserViewModel>(user);
+            return userViewModel;
+        }
+        public User UserViewModelToUserMapper(UserViewModel userViewModel)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<UserViewModel, User>());
             var mapper = config.CreateMapper();
             User user = mapper.Map<User>(userViewModel);
+            return user;
+        }
+        public void Create(UserViewModel userViewModel)
+        {
+            User user = UserViewModelToUserMapper(userViewModel);
             userRepository.Create(user);
         }
         public void Edit(UserViewModel userViewModel)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<UserViewModel, User>());
-            var mapper = config.CreateMapper();
-
-            User user = mapper.Map<User>(userViewModel);
+            User user = UserViewModelToUserMapper(userViewModel);
             userRepository.Edit(user);
         }
         public UserViewModel Detail(int id)
         {
             User user = userRepository.Detail(id);
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<User, UserViewModel>());
-            var mapper = config.CreateMapper();
-            UserViewModel userViewModel = mapper.Map<UserViewModel>(user);
+            UserViewModel userViewModel = UserToUserViewModelMapper(user);
+            return userViewModel;
+        }
+        public UserViewModel Detail(string username)
+        {
+            User user = userRepository.Detail(username);
+            UserViewModel userViewModel = UserToUserViewModelMapper(user);
             return userViewModel;
         }
         public void Delete(int id)
         {
             userRepository.Delete(id);
         }
+
+
     }
 }

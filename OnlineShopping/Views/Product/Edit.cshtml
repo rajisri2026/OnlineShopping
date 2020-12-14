@@ -61,9 +61,10 @@
             url: '/Product/Edit',
             data: $("#editProduct").serialize()
         })
-            .done(function (data) {
-                $("#tableContainer").html(data);
-                $("#actionContainer").html("");
+            .done(function () {
+                $(document).ajaxStop(function () {
+                    window.location.reload();
+                });
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("Failed!");

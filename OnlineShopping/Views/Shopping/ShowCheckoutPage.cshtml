@@ -1,0 +1,108 @@
+﻿@model OnlineShopping.ViewModel.CheckoutViewModel
+
+@{
+    ViewBag.Title = "Checkout";
+    decimal totalAmount = 0.00M;
+}
+
+<h2>Checkout</h2>
+<div class="container">
+    <div class="col-md-4">
+        @foreach (var item in Model.CartViewModel)
+        {
+            totalAmount = (Convert.ToDecimal(item.Product.Price) * item.Quantity) + totalAmount;
+
+            <div class="container">
+                <label>Name</label><br />@item.Product.ProductName<br />
+
+                <div>
+                    @if (item.Quantity == 1)
+                    {
+                        <button type="button" disabled>-</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="minusBtn" product-id="@item.ProductId">-</button>
+                    }
+                    <input type="number" value="@item.Quantity" class="qty" min="1" style="width:50px" />
+                    <button type="button" class="plusBtn" product-id="@item.ProductId">+</button>
+
+                </div><br />
+
+                <label>Total Price</label>@(item.Quantity * item.Product.Price)<br />
+            </div>
+
+            <hr />
+        }
+    </div>
+
+    <div class="col-md-4">
+        <label>First Name</label>
+        <br />@Model.UserViewModel.FirstName<br />
+        <label>Email</label><br />@Model.UserViewModel.UserEmail<br />
+
+    </div>
+    <div class="col-md-4">
+        <label>Total Bill : </label>@totalAmount<br />
+    </div>
+
+    <div class="col-md-4">
+        <a href="@Url.Action("PlaceOrder","Shopping",new { totalAmount= totalAmount})" onclick="alert('Order placed!')" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> PlaceOrder</a>
+    </div>
+
+</div>
+
+<script>
+    $(".minusBtn").click(function () {
+        debugger;
+        $.ajax({
+            type: 'POST',
+            url: '/Shopping/DecreaseQuantity',
+            data: {
+                productId: $(this).attr('product-id')
+            }
+        })
+            .done(function () {
+                $(document).ajaxStop(function () {
+                    window.location.reload();
+                });
+            })
+            .fail(function () {
+                alert("Failed to decrease product quantity !");
+            })
+    });
+    $(".plusBtn").click(function () {
+        debugger;
+        $.ajax({
+            type: 'POST',
+            url: '/Shopping/IncreaseQuantity',
+            data: {
+                productId: $(this).attr('product-id')
+            }
+        })
+            .done(function () {
+                $(document).ajaxStop(function () {
+                    window.location.reload();
+                });
+
+            })
+            .fail(function () {
+                alert("Failed to increase product quantity !");
+            })
+    });
+
+    $("#placeOrderBtn").click(function () {
+        debugger;
+        $.ajax(function () {
+            type: 'POST';
+            url: '/Shopping/PlaceOrder';
+
+        })
+            .done(function () {
+                alert("Done");
+            })
+            .fail(function () {
+                alert("Failed");
+            })
+    });
+</script>

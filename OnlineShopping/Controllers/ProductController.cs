@@ -1,11 +1,9 @@
-﻿using OnlineShopping.DomainLayer;
-using OnlineShopping.ServiceLayer;
+﻿using OnlineShopping.ServiceLayer;
 using OnlineShopping.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace OnlineShopping.Controllers
@@ -16,20 +14,21 @@ namespace OnlineShopping.Controllers
         ProductServices productServices = new ProductServices();
         CategoryServices categoryServices = new CategoryServices();
 
-        public ActionResult Index()
+        //public ActionResult Index()
+
+        //{
+        //    return View();
+        //}
         
-        {
-            return View();
-        }
         public ActionResult ProductsList(string search)
         {
             IEnumerable<ProductViewModel> producViewModel = productServices.DisplayAll();
             if (!string.IsNullOrEmpty(search))
             {
                 producViewModel = producViewModel.Where(x => x.ProductName.ToLower().Contains(search.ToLower())).ToList();
+                return View(producViewModel);
             }
-            
-            return PartialView(producViewModel);
+            return View(producViewModel);
         }
         public ActionResult Create()
        
@@ -40,24 +39,22 @@ namespace OnlineShopping.Controllers
         [HttpPost]
         public ActionResult Create(ProductViewModel productViewModel)
         {
-            //try
-            //{
+            try
+            {
                 if (ModelState.IsValid)
                 {
                     productServices.Create(productViewModel);
-                    //TempData["SuccessMessage"] = "Product added successfully";
                     return RedirectToAction("ProductsList");
                 }
                 else
                 {
                     return View();
                 }
-            //}
-            //catch (Exception exception)
-            //{
-            //    //TempData["ErrorMessage"] = "Failed to add new product" + exception.Message;
-            //    return RedirectToAction("Index");
-            //}
+            }
+            catch (Exception exception)
+            {
+                return View("Error", new HandleErrorInfo(exception, "Product", "ProductsList"));
+            }
         }
 
         public ActionResult Detail(int? id)
@@ -67,7 +64,7 @@ namespace OnlineShopping.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             ProductViewModel productViewModel = productServices.Detail(Convert.ToInt32(id));
-            return View(productViewModel);
+            return PartialView(productViewModel);
         }
         public ActionResult Edit(int? id)
         {

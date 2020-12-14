@@ -55,8 +55,7 @@ namespace OnlineShopping.Controllers
             }
             catch(Exception e)
             {
-                ModelState.AddModelError("", e);
-                return View();
+                return View("Error",new HandleErrorInfo(e,"Account","Signup"));
             }
         }
 
@@ -85,7 +84,7 @@ namespace OnlineShopping.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Product");
+                        return RedirectToAction("ProductsList", "Product");
                     }
                 }
                 ModelState.AddModelError("", "Invalid Username or Password");
@@ -93,8 +92,7 @@ namespace OnlineShopping.Controllers
             }
             catch (Exception e)
             {
-                ModelState.AddModelError("", e);
-                return View();
+                return View("Error", new HandleErrorInfo(e, "Index", "Home"));
             }
         }
 

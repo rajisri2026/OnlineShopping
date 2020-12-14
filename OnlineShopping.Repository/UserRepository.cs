@@ -48,6 +48,12 @@ namespace OnlineShopping.Repository
         {
             return onlineShoppingDbContext.Users.Find(id);
         }
+
+        public User Detail(string username)
+        {
+            User user = onlineShoppingDbContext.Users.Single(x => x.UserName == username);
+            return user;
+        }
         public void Save()
         {
             onlineShoppingDbContext.SaveChanges();

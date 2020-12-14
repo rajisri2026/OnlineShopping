@@ -67,15 +67,13 @@
             url: '/Product/Create',
             data: $("#createProduct").serialize()
         })
-            .done(function (data) {
-                $("#tableContainer").html(data);
-                $("#actionContainer").html("");
+            .done(function () {
+                $(document).ajaxStop(function () {
+                    window.location.reload();
+                });
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("Failed!");
             })
     });
 </script>
-@*<div>
-    @Html.ActionLink("Back to List", "ProductsList")
-</div>*@

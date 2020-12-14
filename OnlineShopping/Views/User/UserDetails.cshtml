@@ -4,19 +4,11 @@
     ViewBag.Title = "UserDetails";
 }
 
-<h2>UserDetails</h2>
-@if (User.IsInRole("Admin"))
-{
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-}
+<h2 style="text-align:center">User Details</h2>
 
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UserId)
-        </th>
+       
         <th>
             @Html.DisplayNameFor(model => model.FirstName)
         </th>
@@ -38,9 +30,7 @@
     @foreach (var item in Model)
     {
 <tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.UserId)
-    </td>
+   
     <td>
         @Html.DisplayFor(modelItem => item.FirstName)
     </td>
@@ -59,9 +49,9 @@
     @if (User.IsInRole("Admin"))
     {
         <td>
-            @Html.ActionLink("Edit", "Edit", new {  id = item.UserId  }) |
+            <button class="editBtn" data-id="@item.UserId" ><span class="glyphicon glyphicon-edit"></span> Edit</button> 
 
-            @Html.ActionLink("Delete", "Delete", new {  id=item.UserId  })
+            @*<button class="deleteBtn" type="button" data-id="@item.UserId"><span class="glyphicon glyphicon-remove"></span> Delete</button>*@
         </td>
     }
 
@@ -69,3 +59,55 @@
     }
 
 </table>
+<div id="actionContainer">
+
+</div>
+
+<script>
+    //$(".deleteBtn").click(function () {
+
+    //    var confirmDelete = confirm("Are you sure to delete the selected user?");
+    //    if (confirmDelete) {
+    //        $.ajax({
+    //            type: 'POST',
+    //            url: '/User/Delete',
+    //            data: {
+    //                userId: $(this).attr('data-id')
+    //            }
+    //        })
+    //            .done(function () {
+    //                $(document).ajaxStop(function () {
+    //                    window.location.reload();
+    //                });
+
+    //            })
+    //            .fail(function () {
+    //                alert("Failed to delete the user!");
+    //            })
+    //    }
+
+    //});
+
+    $(".editBtn").click(function () {
+
+        $.ajax({
+            url: '/User/Edit',
+            data: {
+                userId: $(this).attr('data-id')
+            }
+        })
+            .done(function (data) {
+                $("#actionContainer").html(data);
+                focusAction("actionContainer");
+            })
+            .fail(function (/*XMLHttpRequest, textStatus, errorThrown*/) {
+                alert("Failed!");
+            })
+    });
+
+    function focusAction(controlToFocus) {
+        $('html, body').animate({
+            scrollTop: $("#" + controlToFocus).offset().top - 100
+        }, 1000);
+    }
+</script>

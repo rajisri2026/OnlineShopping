@@ -6,77 +6,73 @@
 
 <h2>Category List</h2>
 <div>
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("CategoryList", "Category", FormMethod.Get))
     {
-        <input id="searchTxt" name="search" />
-        <button type="button" id="searchBtn">Search</button>
-        <button type="button" id="newBtn">New</button>
+        @Html.TextBox("search")<input value="Search" type="submit" />
+        if (User.IsInRole("Admin"))
+        {
+            <button type="button" id="newBtn">New</button>
+        }
+
     }
 </div>
-
-<table class="table">
-    <tr>
-        
-        <th>
-            @Html.DisplayNameFor(model => model.CategoryName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ImageURL)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.isFeatured)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<div id="=tableContainer">
+    <table class="table">
         <tr>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoryName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageURL)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.isFeatured)
-            </td>
-            <td>
-                <button class="editBtn" data-id="@item.CategoryId">Edit</button>
-                <button class="deleteBtn" data-id="@item.CategoryId">Delete</button>
-            </td>
+
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageURL)
+            </th>
+
+            <th></th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImageURL)
+                </td>
+                @if (User.IsInRole("Admin"))
+                {
+
+                    <td>
+                        <button class="editBtn" data-id="@item.CategoryId">Edit</button>
+                        <button class="deleteBtn" data-id="@item.CategoryId">Delete</button>
+                    </td>
+                }
+
+            </tr>
+        }
+
+    </table>
+</div>
+<div id="actionContainer">
+
+</div>
+
 <script>
-
-    $("#searchBtn").click(function () {
-        var searchValue = $("#searchTxt").val();
-        $.ajax({
-            url: '/Category/CategoryList',
-            data: {
-                search: searchValue
-            }
-        })
-            .done(function (data) {
-                $("#tableContainer").html(data);
-            })
-            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("Failed!");
-            })
-    });
+    //    function focusAction(controlToFocus) {
+    //        $('html, body').animate({
+    //            scrollTop: $("#" + controlToFocus).offset().top - 100
+    //        }, 1000);
+    //}
 
     $("#newBtn").click(function () {
 
         $.ajax({
             url: '/Category/Create',
-            type:'GET'
-           })
+            type: 'GET'
+        })
             .done(function (data) {
                 $("#actionContainer").html(data);
-                focusAction("actionContainer");
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("Failed!");
@@ -92,7 +88,6 @@
         })
             .done(function (data) {
                 $("#actionContainer").html(data);
-                focusAction("actionContainer");
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("Failed!");
@@ -110,8 +105,10 @@
                     id: $(this).attr('data-id')
                 }
             })
-                .done(function (data) {
-                    $("#tableContainer").html(data);
+                .done(function () {
+                    $(document).ajaxStop(function () {
+                        window.location.reload();
+                    });
                 })
                 .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Failed!");

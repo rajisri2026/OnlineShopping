@@ -7,13 +7,13 @@ namespace OnlineShopping.DomainLayer.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class shoppingcart2 : IMigrationMetadata
+    public sealed partial class addedcartupdated : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(shoppingcart2));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(addedcartupdated));
         
         string IMigrationMetadata.Id
         {
-            get { return "202012050520443_shoppingcart2"; }
+            get { return "202012120827349_addedcartupdated"; }
         }
         
         string IMigrationMetadata.Source

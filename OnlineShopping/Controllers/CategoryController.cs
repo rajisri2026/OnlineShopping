@@ -13,11 +13,10 @@ namespace OnlineShopping.Controllers
     {
         CategoryServices categoryServices = new CategoryServices();
 
-        public ActionResult Index()
-        {
-            
-            return View();
-        }
+        //public ActionResult Index()
+        //{
+        //    return View();
+        //}
 
         public ActionResult CategoryList(string search)
         {
@@ -27,7 +26,7 @@ namespace OnlineShopping.Controllers
                 categoryViewModel = categoryViewModel.Where(x => x.CategoryName.ToLower().Contains(search.ToLower())).ToList();
             }
 
-            return PartialView(categoryViewModel);
+            return View(categoryViewModel);
         }
 
         public ActionResult Create()
@@ -74,7 +73,7 @@ namespace OnlineShopping.Controllers
             catch (Exception exception)
             {
                 ModelState.AddModelError("", exception);
-                return RedirectToAction("Index");
+                return RedirectToAction("CategoryList");
             }
         }
      

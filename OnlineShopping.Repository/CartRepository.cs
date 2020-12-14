@@ -15,9 +15,18 @@ namespace OnlineShopping.Repository
             onlineShoppingDbContext = new OnlineShoppingDbContext();
         }
 
-        public Cart GetCart(int cartId)
+        public Cart GetCart(int CartId)
         {
-            return onlineShoppingDbContext.Carts.Single(model => model.CartId == cartId);
+            return onlineShoppingDbContext.Carts.Single(model => model.CartId == CartId);
+        }
+        public Cart GetCart(int productId, string username)
+        {
+            return onlineShoppingDbContext.Carts.Single(model => model.ProductId == productId && model.UserName == username);
+        }
+        public int GetUserId(string username)
+        {
+            User user = onlineShoppingDbContext.Users.Single(x => x.UserName == username);
+            return user.UserId;
         }
         public Product GetProduct(int id)
         {
@@ -25,43 +34,31 @@ namespace OnlineShopping.Repository
         }
         public bool AlreadyExists(int id, string username)
         {
-            return onlineShoppingDbContext.Carts.Any(x => x.ProductId == id && x.Username==username);
+            return onlineShoppingDbContext.Carts.Any(x => x.ProductId == id && x.UserName==username);
+
         }
-        public void StoreToCartDb(Cart cart)
+        public void StoreToCartDb(Cart Cart)
         {
-            onlineShoppingDbContext.Carts.Add(cart);
+            onlineShoppingDbContext.Carts.Add(Cart);
             onlineShoppingDbContext.SaveChanges();
         }
-        public void UpdateCartDb(Cart cart)
+        public void UpdateCartDb(Cart Cart)
         {
-            onlineShoppingDbContext.Entry(cart).State = EntityState.Modified;
+            onlineShoppingDbContext.Entry(Cart).State = EntityState.Modified;
             onlineShoppingDbContext.SaveChanges();
         }
         public List<Cart> ShowCartFromDb(string userName)
         {
-            List<Cart> carts = onlineShoppingDbContext.Carts.Where(x => x.Username == userName).ToList();
-            return carts;
+            List<Cart> Carts = onlineShoppingDbContext.Carts.Where(x => x.UserName == userName).ToList();
+            return Carts;
         }
 
-        public void RemoveFromCart(int cartId)
+        public void RemoveFromCart(int CartId)
         {
-            Cart cart = onlineShoppingDbContext.Carts.Find(cartId);
-            onlineShoppingDbContext.Carts.Remove(cart);
+            Cart Cart = onlineShoppingDbContext.Carts.Find(CartId);
+            onlineShoppingDbContext.Carts.Remove(Cart);
             onlineShoppingDbContext.SaveChanges();
         }
-        //public void DecreaseQuantity(int cartId)
-        //{
-        //    Cart cart = onlineShoppingDbContext.Carts.Find(cartId);
-        //    cart.Quantity -= 1;
-        //    onlineShoppingDbContext.Entry(cart).State = EntityState.Modified;
-        //    onlineShoppingDbContext.SaveChanges();
-        //}
-        //public void IncreaseQuantity(int cartId)
-        //{
-        //    Cart cart = onlineShoppingDbContext.Carts.Find(cartId);
-        //    cart.Quantity += 1;
-        //    onlineShoppingDbContext.Entry(cart).State = EntityState.Modified;
-        //    onlineShoppingDbContext.SaveChanges();
-        //}
+        
     }
 }

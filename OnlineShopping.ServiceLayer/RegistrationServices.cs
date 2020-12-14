@@ -25,9 +25,10 @@ namespace OnlineShopping.ServiceLayer
             var config = new MapperConfiguration(cfg => cfg.CreateMap<LoginViewModel, User>());
             var mapper = config.CreateMapper();
             User user = mapper.Map<LoginViewModel, User>(userViewModel);
+
             return user;
         }
-        
+
         public void AnyUser(User user, out bool email, out bool userName)
         {
             userRepository.AnyUser(user, out email, out userName);

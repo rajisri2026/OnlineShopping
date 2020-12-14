@@ -89,14 +89,15 @@ namespace OnlineShopping.ServiceLayer
                     item.UserName = userName;
                     if (value)
                     {
-                        Cart cart = cartRepository.GetCart(item.CartId);
-                       // Cart cart = cartRepository.GetCart(item.ProductId,userName);
+                        //Cart cart = cart.GetCart(item.CartId);
+                        Cart cart = cartRepository.GetCart(item.ProductId, userName);
                         cart.Quantity =item.Quantity + cart.Quantity;
                         cartRepository.UpdateCartDb(cart);
                     }
                     else
                     {
                         Cart cart = CartViewModelToCartMapper(item);
+                        cart.UserId = cartRepository.GetUserId(userName);
                         cartRepository.StoreToCartDb(cart);
                     } 
                 }
@@ -113,25 +114,29 @@ namespace OnlineShopping.ServiceLayer
             Cart cart = new Cart();
             int id = productViewModel.ProductId;
             List<Cart> carts = cartRepository.ShowCartFromDb(username);
-            bool itemExists = carts.Any(item => item.ProductId == id);
-            if(itemExists)
-            {
-                foreach (var item in carts)
+          
+                bool itemExists = carts.Any(item => item.ProductId == id);
+                if (itemExists)
                 {
-                    if (item.ProductId == id)
+                    foreach (var item in carts)
                     {
-                        item.Quantity = ++item.Quantity;
+                        if (item.ProductId == id)
+                        {
+                            item.Quantity = ++item.Quantity;
                         cartRepository.UpdateCartDb(item);
+                        }
                     }
                 }
-            }
-            else
-            {
-                cart.Quantity = 1;
-                cart.Username = username;
-                cart.ProductId = id;
+                else
+                {
+                    cart.UserId = cartRepository.GetUserId(username);
+                    cart.Quantity = 1;
+                    cart.UserName = username;
+                    cart.ProductId = id;
                 cartRepository.StoreToCartDb(cart);
-            }
+                }
+         
+            
         }
 
         public List<CartViewModel> RemoveFromCart(List<CartViewModel> cartViewModel, int cartId, int productId)

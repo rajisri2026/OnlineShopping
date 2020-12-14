@@ -59,6 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegistrationRepository.cs" />
     <Compile Include="RoleRepository.cs" />
+    <Compile Include="ShoppingRepository.cs" />
     <Compile Include="UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>

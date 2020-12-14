@@ -138,6 +138,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
+    <Compile Include="Controllers\ShoppingController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -198,25 +199,21 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\User\UserDetails.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
-    <Content Include="Views\User\Delete.cshtml" />
     <Content Include="Views\Category\Create.cshtml" />
     <Content Include="Views\Account\Signup.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Category\Edit.cshtml" />
-    <Content Include="Views\Category\Delete.cshtml" />
-    <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Product\ProductsList.cshtml" />
     <Content Include="Views\Product\Create.cshtml" />
     <Content Include="Views\Product\Edit.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Category\CategoryList.cshtml" />
-    <Content Include="Views\Shopping\Checkout1.cshtml" />
-    <Content Include="Views\Shopping\Checkout.cshtml" />
     <Content Include="Views\Cart\ShowCart.cshtml" />
-    <Content Include="Views\Shared\_ShowCartView.cshtml" />
-    <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Account\LoginUI.cshtml" />
+    <Content Include="Views\User\UpdateProfile.cshtml" />
+    <Content Include="Views\User\ChangePassword.cshtml" />
+    <Content Include="Views\Account\Login1.cshtml" />
+    <Content Include="Views\Shopping\ShowCheckoutPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

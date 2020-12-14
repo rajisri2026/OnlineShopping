@@ -1,14 +1,12 @@
 ﻿using OnlineShopping.ServiceLayer;
 using OnlineShopping.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace OnlineShopping.Controllers
 {
     [AllowAnonymous]
+    //[Authorize(Roles ="Admin , User")]
+
     public class HomeController : Controller
     {
         CategoryServices categoryServices = new CategoryServices();

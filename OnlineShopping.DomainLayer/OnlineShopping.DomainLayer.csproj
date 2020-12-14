@@ -71,16 +71,22 @@
     <Compile Include="Migrations\202012050501476_shoppingcart.designer.cs">
       <DependentUpon>202012050501476_shoppingcart.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202012050513492_shoppingcart1.cs" />
-    <Compile Include="Migrations\202012050513492_shoppingcart1.designer.cs">
-      <DependentUpon>202012050513492_shoppingcart1.cs</DependentUpon>
+    <Compile Include="Migrations\202012120822519_cartdeleted.cs" />
+    <Compile Include="Migrations\202012120822519_cartdeleted.designer.cs">
+      <DependentUpon>202012120822519_cartdeleted.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202012050520443_shoppingcart2.cs" />
-    <Compile Include="Migrations\202012050520443_shoppingcart2.designer.cs">
-      <DependentUpon>202012050520443_shoppingcart2.cs</DependentUpon>
+    <Compile Include="Migrations\202012120827349_addedcartupdated.cs" />
+    <Compile Include="Migrations\202012120827349_addedcartupdated.designer.cs">
+      <DependentUpon>202012120827349_addedcartupdated.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012131538131_OrderTabledAdded.cs" />
+    <Compile Include="Migrations\202012131538131_OrderTabledAdded.designer.cs">
+      <DependentUpon>202012131538131_OrderTabledAdded.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OnlineShoppingDbContext.cs" />
+    <Compile Include="Order.cs" />
+    <Compile Include="OrderDetail.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role.cs" />
@@ -103,11 +109,14 @@
     <EmbeddedResource Include="Migrations\202012050501476_shoppingcart.resx">
       <DependentUpon>202012050501476_shoppingcart.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012050513492_shoppingcart1.resx">
-      <DependentUpon>202012050513492_shoppingcart1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202012120822519_cartdeleted.resx">
+      <DependentUpon>202012120822519_cartdeleted.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012050520443_shoppingcart2.resx">
-      <DependentUpon>202012050520443_shoppingcart2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202012120827349_addedcartupdated.resx">
+      <DependentUpon>202012120827349_addedcartupdated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012131538131_OrderTabledAdded.resx">
+      <DependentUpon>202012131538131_OrderTabledAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

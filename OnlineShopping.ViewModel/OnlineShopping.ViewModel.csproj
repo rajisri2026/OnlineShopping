@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="CartViewModel.cs" />
     <Compile Include="CategoryViewModel.cs" />
+    <Compile Include="CheckoutViewModel.cs" />
     <Compile Include="HomeViewModel.cs" />
     <Compile Include="ProductViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

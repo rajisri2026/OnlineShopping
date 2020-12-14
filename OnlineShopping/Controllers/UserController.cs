@@ -3,42 +3,45 @@ using OnlineShopping.ServiceLayer;
 using OnlineShopping.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace OnlineShopping.Controllers
 {
+    
     public class UserController : Controller
     {
         UserServices userServices = new UserServices();
-     //   User user = new User();
+        [Authorize(Roles ="Admin")]
         public ActionResult UserDetails()
         {
             IEnumerable<UserViewModel> userViewModels = userServices.DisplayAll();
             return View(userViewModels);
         }
-
-        public ActionResult Edit(int? id)
+        public ActionResult Detail(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
+            UserViewModel userViewModel = userServices.Detail(Convert.ToInt32(id));
+            return View(userViewModel);
+        }
+        public ActionResult Edit(int userId)
+        {
             IEnumerable<Role> Roles = userServices.GetRoles();
             ViewBag.Roles = new SelectList(Roles, "RoleId", "RoleName");
 
-            UserViewModel userViewModel = userServices.Detail(Convert.ToInt32(id));
+            UserViewModel userViewModel = userServices.Detail(userId);
        
             if (userViewModel == null)
             {
                 return HttpNotFound();
             }
-            return View(userViewModel);
+            return PartialView(userViewModel);
 
         }
+        
         [HttpPost]
         public ActionResult Edit(UserViewModel userViewModel)
         {
@@ -59,31 +62,59 @@ namespace OnlineShopping.Controllers
                     return View();
                 }
             }
-            catch (Exception exception)
+                catch (Exception e)
             {
-                ModelState.AddModelError("", exception);
-                return View();
+                return View("Error", new HandleErrorInfo(e, "ProductsList", "Product"));
             }
         }
-
-        public ActionResult Delete(int? id)
+        //[HttpPost]
+        //public ActionResult Delete(int userId)
+        //{
+        //    userServices.Delete(userId);
+        //    return RedirectToAction("UserDetails");
+        //}
+        public ActionResult UpdateProfile()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserViewModel userViewModel = userServices.Detail(Convert.ToInt32(id));
-            if (userViewModel == null)
-            {
-                return HttpNotFound();
-            }
+            UserViewModel userViewModel = userServices.Detail(Session["uname"] as string);
             return View(userViewModel);
         }
         [HttpPost]
-        public ActionResult Delete(int id)
+        public ActionResult UpdateProfile(UserViewModel userViewModel)
         {
-            userServices.Delete(id);
-            return RedirectToAction("UserDetails");
+            if (User.IsInRole("Admin"))
+            {
+                userViewModel.RoleId = 1;
+            }
+            else
+            {
+                userViewModel.RoleId = 2;
+            }
+            userServices.Edit(userViewModel);
+            Session["uname"] = userViewModel.UserName.ToString();
+            return RedirectToAction("Index", "Product");
+        }
+
+        public ActionResult ChangePassword()
+        {
+            UserViewModel userViewModel = userServices.Detail(Session["uname"] as string);
+            return View(userViewModel);
+        }
+        [HttpPost]
+        public ActionResult ChangePassword(UserViewModel userViewModel)
+        {
+            if(userViewModel.Password == userViewModel.OldPassword)
+            {
+                userViewModel.Password = userViewModel.NewPassword;
+                userServices.Edit(userViewModel);
+                return RedirectToAction("Index", "Product");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Incorrect Old Password");
+                return View();
+            }
+            
+            
         }
     }
 }
