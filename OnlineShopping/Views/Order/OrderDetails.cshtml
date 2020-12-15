@@ -1,0 +1,59 @@
+﻿@model OnlineShopping.ViewModel.OrderViewModel
+
+@{
+    ViewBag.Title = "OrderDetails";
+}
+
+<h2>OrderDetails</h2>
+
+<div>
+    <label>User Id : </label>@Model.UserId<br />
+    <label>Order Id : </label>@Model.OrderId<br />
+    <label>Order Time : </label>@Model.OrderCreatedOn<br />
+    <label>Order Status : </label>@Model.Status<br />
+</div>
+<hr />
+<div>
+    <table class="text-center table-striped table-bordered table-condensed">
+        <tr>
+            <th>Product Id</th>
+            <th>Product Name</th>
+            <th>Unit Price</th>
+            <th>Quantity</th>
+        </tr>
+
+        @foreach (var item in Model.OrderDetail)
+        {
+            <tr>
+                <td>
+                    @item.ProductId
+                </td>
+                <td>
+                    @item.Product.ProductName
+                </td>
+                <td>
+                    @item.Product.Price
+                </td>
+                <td>
+                    @item.Quantity
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<hr />
+<div>
+    <a class="btn btn-default" href="@Url.Action("ShowPendingOrders")"><span class="glyphicon glyphicon-arrow-left"></span> Back</a>
+    @if (Model.Status == "Pending")
+    {
+        <a href="@Url.Action("ApproveOrder",new { orderId = Model.OrderId , forApproval = true, forDispatch = false, forCompletion = false})" class="btn btn-success ">Approve</a>
+    }
+    else if (Model.Status == "Approved")
+    {
+        <a href="@Url.Action("ApproveOrder",new { orderId = Model.OrderId , forDispatch = true, forApproval = false, forCompletion = false})" class="btn btn-success ">Dispatch</a>
+    }
+    else if (Model.Status == "Dispatched")
+    {
+        <a href="@Url.Action("ApproveOrder",new { orderId = Model.OrderId , forCompletion = true, forApproval = false, forDispatch = false})" class="btn btn-success ">Complete Order</a>
+    }
+</div>

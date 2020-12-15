@@ -30,7 +30,7 @@
             display: none;
             position: absolute;
             background-color: #f1f1f1;
-            min-width: 120px;
+            min-width: 1200px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
         }
@@ -71,7 +71,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="@Url.Action("Index","Home")"><span class="glyphicon glyphicon-home"></span> Home</a></li>
                     <li><a href="@Url.Action("ProductsList","Product")"><span class="glyphicon glyphicon-list-alt"></span> Products</a></li>
-                    <li><a href="@Url.Action("CategoryList","Category")"><span class="glyphicon glyphicon-list"></span> Category</a></li>
+                   
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -87,10 +87,16 @@
                             @if (User.IsInRole("Admin"))
                             {
                                 <a href="@Url.Action("UserDetails","User")"><span class="glyphicon glyphicon-user"></span> Users</a>
+                                <a href="@Url.Action("ShowPendingOrders","Order")"><span class="glyphicon glyphicon-list"></span> Orders</a>
+                                <a href="@Url.Action("ShowCompletedOrders","Order")"><span class="glyphicon glyphicon-list"></span> Completed Orders</a>
+                                <a href="@Url.Action("CancelledOrders","Order")"><span class="glyphicon glyphicon-remove"></span> Cancelled Orders</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("YourOrders","Shopping")"><span class="glyphicon glyphicon-flag"></span> Your Orders</a>
+                                <a href="@Url.Action("YourOrdersHistory","Shopping")"><span class="glyphicon glyphicon-gift"></span> Your orders history</a>
                             }
 
-                            <a href="@Url.Action("YourOrders","User")"><span class="glyphicon glyphicon-flag"></span> Your Orders</a>
-                            <a href="@Url.Action("AlreadyBought","User")"><span class="glyphicon glyphicon-gift"></span> Already Bought</a>
                             <a href="@Url.Action("UpdateProfile","User")"><span class="glyphicon glyphicon-pencil"></span> Update Profile</a>
                             <a href="@Url.Action("Logout","Account")"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
                         </div>

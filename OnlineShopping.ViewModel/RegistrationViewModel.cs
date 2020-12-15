@@ -32,9 +32,7 @@ namespace OnlineShopping.ViewModel
 
         [Required]
         [DataType(DataType.Password)]
-       // [RegularExpression(@"((?=.{3,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*\s]))", ErrorMessage = "Invalid Password format")]
-        //[RegularExpression(@"(?=.{3,})(?=.*\d)(?=.*\W)", ErrorMessage = "Invalid Password")]
-       // [RegularExpression(@"^(?=.*[a - z])(?=.*[A - Z])(?=.*\d)(?=.*[^\da - zA - Z]).{4, 15}$", ErrorMessage = "Invalid Password format")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z])(?=.*[\S]).{6,15}$", ErrorMessage = "Password must be between 6 and 15 characters and contain one uppercase letter, one lowercase letter, one digit and one special character.")]
         public string Password { get; set; }
 
         [Required]

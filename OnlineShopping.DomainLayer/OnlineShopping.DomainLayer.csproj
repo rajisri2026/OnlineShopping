@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Cart.cs" />
     <Compile Include="Category.cs" />
+    <Compile Include="CompletedOrder.cs" />
     <Compile Include="Migrations\202011281349194_InitialCreate.cs" />
     <Compile Include="Migrations\202011281349194_InitialCreate.designer.cs">
       <DependentUpon>202011281349194_InitialCreate.cs</DependentUpon>
@@ -82,6 +83,10 @@
     <Compile Include="Migrations\202012131538131_OrderTabledAdded.cs" />
     <Compile Include="Migrations\202012131538131_OrderTabledAdded.designer.cs">
       <DependentUpon>202012131538131_OrderTabledAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012150635264_CompleteOrderFeature.cs" />
+    <Compile Include="Migrations\202012150635264_CompleteOrderFeature.designer.cs">
+      <DependentUpon>202012150635264_CompleteOrderFeature.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OnlineShoppingDbContext.cs" />
@@ -117,6 +122,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202012131538131_OrderTabledAdded.resx">
       <DependentUpon>202012131538131_OrderTabledAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012150635264_CompleteOrderFeature.resx">
+      <DependentUpon>202012150635264_CompleteOrderFeature.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

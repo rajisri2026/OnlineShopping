@@ -1,0 +1,52 @@
+﻿@model IEnumerable<OnlineShopping.ViewModel.OrderViewModel>
+
+@{
+    ViewBag.Title = "YourOrders";
+}
+
+<h2>Your Orders</h2>
+@if (Model != null && Model.Count() > 0)
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderCreatedOn)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.TotalAmount)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderCreatedOn)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalAmount)
+                </td>
+                <td>
+                    @Html.ActionLink("View Details", "YourOrderDetails", new { orderId = item.OrderId })
+                </td>
+                <td>
+                    @if (item.Status == "Pending" || item.Status == "Approved")
+                    {
+                        @Html.ActionLink("Cancel Order", "CancelOrder", new { orderId = item.OrderId })
+                    }
+
+
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <h2>You have not placed any orders yet!</h2>
+}
+@Html.ActionLink("Back", "ProductsList", "Product")

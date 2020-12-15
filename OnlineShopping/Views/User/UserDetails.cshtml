@@ -98,16 +98,16 @@
         })
             .done(function (data) {
                 $("#actionContainer").html(data);
-                focusAction("actionContainer");
+                //focusAction("actionContainer");
             })
             .fail(function (/*XMLHttpRequest, textStatus, errorThrown*/) {
                 alert("Failed!");
             })
     });
 
-    function focusAction(controlToFocus) {
-        $('html, body').animate({
-            scrollTop: $("#" + controlToFocus).offset().top - 100
-        }, 1000);
-    }
+    //function focusAction(controlToFocus) {
+    //    $('html, body').animate({
+    //        scrollTop: $("#" + controlToFocus).offset().top - 100
+    //    }, 1000);
+    //}
 </script>

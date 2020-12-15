@@ -14,11 +14,6 @@ namespace OnlineShopping.Controllers
         ProductServices productServices = new ProductServices();
         CategoryServices categoryServices = new CategoryServices();
 
-        //public ActionResult Index()
-
-        //{
-        //    return View();
-        //}
         
         public ActionResult ProductsList(string search)
         {

@@ -136,6 +136,7 @@
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Controllers\ShoppingController.cs" />
@@ -211,10 +212,16 @@
     <Content Include="Views\User\UpdateProfile.cshtml" />
     <Content Include="Views\User\ChangePassword.cshtml" />
     <Content Include="Views\Shopping\ShowCheckoutPage.cshtml" />
+    <Content Include="Views\Order\ShowPendingOrders.cshtml" />
+    <Content Include="Views\Order\OrderDetails.cshtml" />
+    <Content Include="Views\Shopping\YourOrders.cshtml" />
+    <Content Include="Views\Shopping\YourOrderDetails.cshtml" />
+    <Content Include="Views\Order\ShowCompletedOrders.cshtml" />
+    <Content Include="Views\Shopping\YourOrdersHistory.cshtml" />
+    <Content Include="Views\Order\CancelledOrders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\css\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

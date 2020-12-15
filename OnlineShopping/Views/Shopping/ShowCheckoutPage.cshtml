@@ -10,10 +10,10 @@
     <div class="col-md-4">
         @foreach (var item in Model.CartViewModel)
         {
-            totalAmount = (Convert.ToDecimal(item.Product.Price) * item.Quantity) + totalAmount;
+            totalAmount = (Convert.ToDecimal(item.Price) * item.Quantity) + totalAmount;
 
             <div class="container">
-                <label>Name</label><br />@item.Product.ProductName<br />
+                <label>Name</label><br />@item.ProductName<br />
 
                 <div>
                     @if (item.Quantity == 1)
@@ -29,7 +29,7 @@
 
                 </div><br />
 
-                <label>Total Price</label>@(item.Quantity * item.Product.Price)<br />
+                <label>Total Price</label>@(item.Quantity * item.Price)<br />
             </div>
 
             <hr />

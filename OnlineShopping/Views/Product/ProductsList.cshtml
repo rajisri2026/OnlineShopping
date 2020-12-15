@@ -8,14 +8,14 @@
 <div>
     @using (Html.BeginForm("ProductsList","Product",FormMethod.Get))
     {
-        @Html.TextBox("search")<input value="Search" type="submit"/>
+        @Html.TextBox("search") <input class="btn btn-default" value="Search" type="submit"/>
     if (User.IsInRole("Admin"))
     {
-            <button type="button" id="newBtn">New</button>
+            <button class="btn btn-default" type="button" id="newBtn">New</button>
         }
 
     }
-</div>
+</div><br />
 
 <div id="=tableContainer">
     <table class="table">
@@ -61,17 +61,18 @@
                 @if (User.IsInRole("Admin"))
                 {
                     <td>
-                        <button class="editBtn" data-id="@item.ProductId">Edit</button>
-                        <button class="deleteBtn" data-id="@item.ProductId">Delete</button>
+                        <button class="editBtn btn btn-primary" data-id="@item.ProductId"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
+                        <button class="deleteBtn btn btn-danger" data-id="@item.ProductId"><span class="glyphicon glyphicon-trash"></span> Delete</button>
 
                     </td>
                 }
                 else
                 {
-                    <td>
-                        <button class="buyBtn btn btn-success" data-id="@item.ProductId"><span class="glyphicon glyphicon-tag"></span> Buy</button>
-                        <button class="addToCartBtn btn btn-info" data-id="@item.ProductId"><span class="glyphicon glyphicon-shopping-cart"></span> Add to cart</button>
-                    </td>
+            <td>
+                <a href="@Url.Action("Checkout","Shopping",new { productId = item.ProductId})" class="btn btn-success">
+                    <span class="glyphicon glyphicon-tag"></span> Buy</a>
+                    <button class="addToCartBtn btn btn-info" data-id="@item.ProductId"><span class="glyphicon glyphicon-shopping-cart"></span> Add to cart</button>
+            </td>
                     <td>
                     </td>
                 }
