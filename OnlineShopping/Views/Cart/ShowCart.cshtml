@@ -1,4 +1,5 @@
-﻿@model IEnumerable<OnlineShopping.ViewModel.CartViewModel>
+﻿
+@model IEnumerable<OnlineShopping.ViewModel.CartViewModel>
 
 @{
     ViewBag.Title = "ShowCart";
@@ -7,135 +8,137 @@
 
 @if (Model != null && Model.Count() != 0)
 {
+    
+    <table class="table">
+        <tr>
+            <td colspan="6" style="text-align:right">
+                <a href="@Url.Action("Checkout","Shopping")" class="btn btn-success"><span class="glyphicon glyphicon-check"></span> Checkout</a>
+            </td>
+        </tr>
+        <tr>
 
-<table class="table">
-    <tr>
-        <td colspan="6" style="text-align:right">
-            <a href="@Url.Action("Checkout","Shopping")" class="btn btn-success"><span class="glyphicon glyphicon-check"></span> Checkout</a>
-        </td>
-    </tr>
-    <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
 
-        <th>
-            @Html.DisplayNameFor(model => model.ProductId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </th>
+            <th>
+                <label>Total Price</label>
+            </th>
+        </tr>
 
-        <th>
-            <label>Total Price</label>
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-
-        if (Session["uname"] != null)
+        @foreach (var item in Model)
         {
-            totalBill = (Convert.ToDecimal(item.Product.Price) * item.Quantity) + totalBill;
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProductId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Product.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserName)
-                </td>
-                <td>
-                    <div>
-                        @if (item.Quantity == 1)
-                        {
-                            <button type="button" disabled>-</button>
-                        }
-                        else
-                        {
-                            <button type="button" class="minusBtn" product-id="@item.ProductId" cart-id="@item.CartId">-</button>
-                        }
-                        <input type="number" value="@item.Quantity" class="qty" min="1" style="width:50px" />
-                        <button type="button" class="plusBtn" product-id="@item.ProductId" cart-id="@item.CartId">+</button>
 
-                    </div>
-                </td>
-                <td>
-                    <input type="number" id="totalPrice" value="@(item.Quantity*item.Product.Price)" readonly="readonly" />
+            if (Session["uname"] != null)
+            {
+                totalBill = (Convert.ToDecimal(item.Product.Price) * item.Quantity) + totalBill;
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        <div>
+                            @if (item.Quantity == 1)
+                            {
+                                <button type="button" disabled>-</button>
+                            }
+                            else
+                            {
+                                <button type="button" class="minusBtn" product-id="@item.ProductId" cart-id="@item.CartId">-</button>
+                            }
+                            <input type="number" value="@item.Quantity" class="qty" min="1" style="width:50px" />
+                            <button type="button" class="plusBtn" product-id="@item.ProductId" cart-id="@item.CartId">+</button>
 
-                </td>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" id="totalPrice" value="@(item.Quantity*item.Product.Price)" readonly="readonly" />
 
-                <td>
-                    <button class="removeFromCart btn btn-danger" data-id="@item.ProductId" cart-id="@item.CartId"><span class="glyphicon glyphicon-trash"></span> Remove</button>
-                </td>
-            </tr>
+                    </td>
+
+                    <td>
+                        <button class="removeFromCart btn btn-danger" data-id="@item.ProductId" cart-id="@item.CartId"><span class="glyphicon glyphicon-trash"></span> Remove</button>
+                    </td>
+                </tr>
+            }
+
+            else
+            {
+                totalBill = (Convert.ToDecimal(item.Price * item.Quantity)) + totalBill;
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        <div>
+                            @if (item.Quantity == 1)
+                            {
+                                <button type="button" disabled>-</button>
+                            }
+                            else
+                            {
+                                <button type="button" product-id="@item.ProductId" cart-id="@item.CartId" class="minusBtn">-</button>
+
+                            }
+                            <input type="number" readonly="readonly" value="@item.Quantity" class="qty" style="width:50px" />
+                            <button type="button" class="plusBtn" product-id="@item.ProductId" cart-id="@item.CartId">+</button>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" id="totalPrice" value="@(item.Quantity*item.Price)" readonly="readonly" />
+
+                    </td>
+
+                    <td>
+                        <button class="removeFromCart btn btn-danger" data-id="@item.ProductId" cart-id="@item.CartId"><span class="glyphicon glyphicon-trash"></span> Remove</button>
+                    </td>
+                </tr>
+
+            }
         }
+        <tr>
+            <td colspan="4" style="text-align:right">
+                Total Amount :
+            </td>
+            <td colspan="4">
+                <input type="number" value="@totalBill" readonly />
+            </td>
 
-        else
-        {
-            totalBill = (Convert.ToDecimal(item.Price * item.Quantity)) + totalBill;
-            <tr>
+        </tr>
+        <tr>
+        </tr>
+        <tr>
+            <td colspan="6">
+                @Html.ActionLink("Continue Shopping", "ProductsList", "Product")
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProductId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserName)
-                </td>
-                <td>
-                    <div>
-                        @if (item.Quantity == 1)
-                        {
-                            <button type="button" disabled>-</button>
-                        }
-                        else
-                        {
-                            <button type="button" product-id="@item.ProductId" cart-id="@item.CartId" class="minusBtn">-</button>
-
-                        }
-                        <input type="number" readonly="readonly" value="@item.Quantity" class="qty" style="width:50px" />
-                        <button type="button" class="plusBtn" product-id="@item.ProductId" cart-id="@item.CartId">+</button>
-                    </div>
-                </td>
-                <td>
-                    <input type="number" id="totalPrice" value="@(item.Quantity*item.Price)" readonly="readonly" />
-
-                </td>
-
-                <td>
-                    <button class="removeFromCart btn btn-danger" data-id="@item.ProductId" cart-id="@item.CartId"><span class="glyphicon glyphicon-trash"></span> Remove</button>
-                </td>
-            </tr>
-
-        }
-    }
-    <tr>
-        <td colspan="4" style="text-align:right">
-            Total Amount :
-        </td>
-        <td colspan="4">
-            <input type="number" value="@totalBill" readonly />
-        </td>
-
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-        <td colspan="6">
-            @Html.ActionLink("Continue Shopping", "ProductsList", "Product")
-        </td>
-
-    </tr>
-</table>
-
+        </tr>
+    </table>
+    @*<div class="container text-center">
+        @Html.PagedListPager(Model, page => Url.Action("ShowCart", new { page }),new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded})
+    </div>*@
 }
 
 else

@@ -9,6 +9,14 @@ using System.Web.Mvc;
 
 namespace OnlineShopping.Controllers
 {
+    /// <summary>
+    /// This handles customer side functionalities.
+    /// User has the option to buy a single product as well as to buy multiple products stored in their cart at once.
+    /// User can view their already bought products;currently placed orders;
+    /// Make request to cancel their order; on checkout, they are directed to checkout page,
+    /// where they fill out their details and they can also increase or decrease product quantity there.
+    /// On successfully placing order, request will be sent to admin for further processing.
+    /// </summary>
     public class ShoppingController : Controller
     {
         ShoppingServices shoppingServices;
@@ -20,11 +28,8 @@ namespace OnlineShopping.Controllers
             shoppingServices = new ShoppingServices();
             userServices = new UserServices();
         }
-        // GET: Shopping
-        public ActionResult Index()
-        {
-            return View();
-        }
+
+        //Shows checkout page where user views their detals and products details.
         [Authorize(Roles = "Customer")]
         public ActionResult Checkout(int? productId)
         {
@@ -42,11 +47,18 @@ namespace OnlineShopping.Controllers
             Session["PlaceOrder"] = checkoutViewModel;
             return RedirectToAction("ShowCheckoutPage");
         }
+
+        //This method is called upon clicking the increase quantity button in the checkout page 
+        //to increase the quantity by one for each click.
+        [HttpPost]
         public ActionResult IncreaseQuantity(int productId)
         {
             Session["CheckoutItems"] = shoppingServices.IncreaseQuantity(Session["CheckoutItems"] as List<CartViewModel>, productId);
             return RedirectToAction("ShowCheckoutPage");
         }
+
+        //This method is called upon clicking the decrease quantity button in the cart page 
+        //to decrease the quantity by one for each click.
         [HttpPost]
         public ActionResult DecreaseQuantity(int productId)
         {
@@ -68,11 +80,15 @@ namespace OnlineShopping.Controllers
             shoppingServices.RemoveCartproducts(checkoutViewModel.CartViewModel);
             return RedirectToAction("ProductsList", "Product");
         }
+
+        //Gets curent user from session variable and display their orders from the orders db.
         public ActionResult YourOrders()
         {
             List<OrderViewModel> orderViewModels = shoppingServices.GetYourOrders(Session["uname"] as string);
             return View(orderViewModels);
         }
+
+        //Gets orderId and shows detail of the same.
         public ActionResult YourOrderDetails(int? orderId)
         {
             if (orderId == null)
@@ -85,11 +101,15 @@ namespace OnlineShopping.Controllers
                 return View(orderDetails);
             }
         }
+
+        //Gets current user from session variable and shows their previously bought items from the completedOrders db.
         public ActionResult YourOrdersHistory()
         {
             List<CompletedOrdersViewModel> completedOrdersViewModels = shoppingServices.YourOrdersHistory(Session["uname"] as string);
             return View(completedOrdersViewModels);
         }
+
+        //This would send a cancel request for an order getting the orderId
         public ActionResult CancelOrder(int? orderId)
         {
             if (orderId == null)

@@ -1,20 +1,25 @@
 ﻿using OnlineShopping.ServiceLayer;
 using OnlineShopping.ViewModel;
-using System;
+using System;///to handle exception
 using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace OnlineShopping.Controllers
 {
     /// <summary>
-    /// This controller handles products added to the cart;
-    /// Stores users products in cart database  
+    /// This controller handles cart funtionalities;
+    /// Stores the products added to cart in session untill the user is logging in and
+    ///adds to the cart db only when the user on successful sign-in.
+    ///The user can remove the cart products; increase or decrease the product quantity in the cart.
     /// </summary>
+
     [AllowAnonymous]
     public class CartController : Controller
     {
         CartServices cartServices = new CartServices();
-       
+
+        //if authenticated user adds to cart, this will store the products in cart db
+        //if the user is un authenticated, it will simply maintain cart items in session variable.
         public ActionResult AddToCart(int id)
         {
             try
@@ -43,12 +48,15 @@ namespace OnlineShopping.Controllers
                     return RedirectToAction("ProductsList", "Product");
                 }
             }
-            catch(Exception exception)
+            catch (Exception e)
             {
-                return View("Error", new HandleErrorInfo(exception, "Index", "Product"));
+                return View("Error", new HandleErrorInfo(e, "ProductsList", "Product"));
             }
-            
+
         }
+
+        //This methods gets all the cart products either from session or from db
+        //based on the authenticity of the user and displays them.
         public ActionResult ShowCart()
         {
             try
@@ -72,35 +80,35 @@ namespace OnlineShopping.Controllers
                 }
                 return View(cartViewModels);
             }
-            catch(Exception exception)
+            catch (Exception e)
             {
-                return View("Error", new HandleErrorInfo(exception, "ShowCart", "Cart"));
+                return View("Error", new HandleErrorInfo(e, "ProductsList", "Product"));
             }
-            
         }
 
+        //This would remove the selected product from session variable of cart items or,
+        //from the db if the user is authenticated.
         [HttpPost]
         public ActionResult RemoveFromCart(int cartId, int productId)
         {
-            try
-            {
-                List<CartViewModel> cartViewModels = Session["CartItems"] as List<CartViewModel>;
-                Session["CartItems"] = cartServices.RemoveFromCart(cartViewModels, cartId, productId);
-                
-                return RedirectToAction("ShowCart");
-            }
-            catch(Exception exception)
-            {
-                return View("Error", new HandleErrorInfo(exception, "ShowCart", "Cart"));
-            }
-            
+            List<CartViewModel> cartViewModels = Session["CartItems"] as List<CartViewModel>;
+            Session["CartItems"] = cartServices.RemoveFromCart(cartViewModels, cartId, productId);
+            Session["CartCounter"] = (Session["CartItems"] as List<CartViewModel>).Count;
+            return RedirectToAction("ShowCart");
+
         }
 
+        //This method is called upon clicking the increase quantity button in the cart page 
+        //to increase the quantity by one for each click.
+        [HttpPost]
         public ActionResult IncreaseQuantity(int cartId, int productId)
         {
             Session["CartItems"] = cartServices.IncreaseQuantity(Session["CartItems"] as List<CartViewModel>, cartId, productId);
             return RedirectToAction("ShowCart");
         }
+
+        //This method is called upon clicking the increase quantity button in the cart page 
+        //to increase the quantity by one for each click.
         [HttpPost]
         public ActionResult DecreaseQuantity(int cartId, int productId)
         {

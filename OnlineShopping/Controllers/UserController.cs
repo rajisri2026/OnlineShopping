@@ -8,11 +8,16 @@ using System.Web.Mvc;
 
 namespace OnlineShopping.Controllers
 {
-    
+    /// <summary>
+    /// This handles user related functionalities.
+    /// Admin and users can view thier profile and update the same; change their passwords;
+    /// Admin can change user roles and view user details.
+    /// </summary>
+
     public class UserController : Controller
     {
         UserServices userServices = new UserServices();
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult UserDetails()
         {
             IEnumerable<UserViewModel> userViewModels = userServices.DisplayAll();
@@ -33,7 +38,7 @@ namespace OnlineShopping.Controllers
             ViewBag.Roles = new SelectList(Roles, "RoleId", "RoleName");
 
             UserViewModel userViewModel = userServices.Detail(userId);
-       
+
             if (userViewModel == null)
             {
                 return HttpNotFound();
@@ -41,20 +46,20 @@ namespace OnlineShopping.Controllers
             return PartialView(userViewModel);
 
         }
-        
+
         [HttpPost]
         public ActionResult Edit(UserViewModel userViewModel)
         {
             try
             {
-               
+
                 if (ModelState.IsValid)
                 {
                     IEnumerable<Role> Roles = userServices.GetRoles();
                     ViewBag.Roles = new SelectList(Roles, "RoleId", "RoleName");
-                    
+
                     userServices.Edit(userViewModel);
-                    
+
                     return RedirectToAction("UserDetails");
                 }
                 else
@@ -62,7 +67,7 @@ namespace OnlineShopping.Controllers
                     return View();
                 }
             }
-                catch (Exception e)
+            catch (Exception e)
             {
                 return View("Error", new HandleErrorInfo(e, "ProductsList", "Product"));
             }
@@ -81,17 +86,24 @@ namespace OnlineShopping.Controllers
         [HttpPost]
         public ActionResult UpdateProfile(UserViewModel userViewModel)
         {
-            if (User.IsInRole("Admin"))
+            try
             {
-                userViewModel.RoleId = 1;
+                if (User.IsInRole("Admin"))
+                {
+                    userViewModel.RoleId = 1;
+                }
+                else
+                {
+                    userViewModel.RoleId = 2;
+                }
+                userServices.Edit(userViewModel);
+                Session["uname"] = userViewModel.UserName.ToString();
+                return RedirectToAction("Index", "Product");
             }
-            else
+            catch (Exception e)
             {
-                userViewModel.RoleId = 2;
+                return View("Error", new HandleErrorInfo(e, "ProductsList", "Product"));
             }
-            userServices.Edit(userViewModel);
-            Session["uname"] = userViewModel.UserName.ToString();
-            return RedirectToAction("Index", "Product");
         }
 
         public ActionResult ChangePassword()
@@ -102,19 +114,25 @@ namespace OnlineShopping.Controllers
         [HttpPost]
         public ActionResult ChangePassword(UserViewModel userViewModel)
         {
-            if(userViewModel.Password == userViewModel.OldPassword)
+            try
             {
-                userViewModel.Password = userViewModel.NewPassword;
-                userServices.Edit(userViewModel);
-                return RedirectToAction("Index", "Product");
+                if (userViewModel.Password == userViewModel.OldPassword)
+                {
+                    userViewModel.Password = userViewModel.NewPassword;
+                    userServices.Edit(userViewModel);
+                    return RedirectToAction("Index", "Product");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Incorrect Old Password");
+                    return View();
+                }
             }
-            else
+            catch (Exception e)
             {
-                ModelState.AddModelError("", "Incorrect Old Password");
-                return View();
+                return View("Error", new HandleErrorInfo(e, "ProductsList", "Product"));
             }
-            
-            
+
         }
     }
 }

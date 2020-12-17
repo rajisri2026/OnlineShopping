@@ -14,11 +14,19 @@ namespace OnlineShopping.Repository
         {
             onlineShoppingDbContext = new OnlineShoppingDbContext();
         }
-        public void AnyUser(User user, out bool email, out bool userName)
+        public bool ExistingUsername(string username)
         {
-            email = onlineShoppingDbContext.Users.Any(x => x.UserEmail == user.UserEmail);
-            userName = onlineShoppingDbContext.Users.Any(x => x.UserName == user.UserName);
+            return onlineShoppingDbContext.Users.Any(x => x.UserName == username);
         }
+        public bool ExistingUserEmail(string userEmail)
+        {
+            return onlineShoppingDbContext.Users.Any(x => x.UserEmail == userEmail);
+        }
+        //public void AnyUser(User user, out bool email, out bool userName)
+        //{
+        //    email = onlineShoppingDbContext.Users.Any(x => x.UserEmail == user.UserEmail);
+        //    userName = onlineShoppingDbContext.Users.Any(x => x.UserName == user.UserName);
+        //}
         public void Create(User user)
         {
             onlineShoppingDbContext.Users.Add(user);

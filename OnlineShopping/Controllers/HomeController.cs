@@ -5,16 +5,15 @@ using System.Web.Mvc;
 namespace OnlineShopping.Controllers
 {
     [AllowAnonymous]
-    //[Authorize(Roles ="Admin , User")]
-
+    
     public class HomeController : Controller
     {
         CategoryServices categoryServices = new CategoryServices();
         public ActionResult Index()
         {
-            HomeViewModel homeViewModel = new HomeViewModel();
-            homeViewModel.FeaturedCategories = categoryServices.GetFeaturedCategories();
-            return View(homeViewModel);
+        //    HomeViewModel homeViewModel = new HomeViewModel();
+        //    homeViewModel.FeaturedCategories = categoryServices.GetFeaturedCategories();
+            return View();
         }
 
         public ActionResult About()

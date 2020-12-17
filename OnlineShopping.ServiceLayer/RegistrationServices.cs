@@ -28,11 +28,18 @@ namespace OnlineShopping.ServiceLayer
 
             return user;
         }
-
-        public void AnyUser(User user, out bool email, out bool userName)
+        public bool ExistingUsername(string username)
         {
-            userRepository.AnyUser(user, out email, out userName);
+            return userRepository.ExistingUsername(username);
         }
+        public bool ExistingUserEmail(string userEmail)
+        {
+            return userRepository.ExistingUserEmail(userEmail);
+        }
+        //public void AnyUser(User user, out bool email, out bool userName)
+        //{
+        //    userRepository.AnyUser(user, out email, out userName);
+        //}
         public void Create(User user)
         {
             userRepository.Create(user);

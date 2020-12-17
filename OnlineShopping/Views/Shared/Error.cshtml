@@ -1,12 +1,11 @@
-﻿@model System.Web.Mvc.HandleErrorInfo
-<h1 class="text-danger">Error.@Model.Exception.Message</h1>
+﻿@*<h1 class="text-danger">Error.@Model.Exception.Message</h1>
 
-<h2 class="text-danger">An error occurred while processing your request.</h2>
-
-@Html.ActionLink("Back", @Model.ActionName, @Model.ControllerName)
+    <h2 class="text-danger">An error occurred while processing your request.</h2>*@
 
 
-@*<!DOCTYPE html>
+
+@model System.Web.Mvc.HandleErrorInfo
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -17,5 +16,7 @@
         <h1>Error.</h1>
         <h2>An error occurred while processing your request.</h2>
     </hgroup>
+
+    @Html.ActionLink("Back", @Model.ActionName, @Model.ControllerName)
 </body>
-</html>*@
+</html>

@@ -75,33 +75,41 @@
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("Cart(" + Session["CartCounter"] + ")", "ShowCart", "Cart")</li>
+                    @if (Convert.ToInt32(Session["CartCounter"]) > 0)
+                    {
+                        <li>@Html.ActionLink("Cart(" + Session["CartCounter"] + ")", "ShowCart", "Cart")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Cart", "ShowCart", "Cart")</li>
+                    }
+
                     @if (User.Identity.IsAuthenticated)
                     {
-                <li>
-                    <div class="dropdown">
-                        <button class="dropbtn">
-                            <span class="glyphicon glyphicon-user "></span> Hi @Session["uname"]
-                        </button>
-                        <div class="dropdown-content">
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <a href="@Url.Action("UserDetails","User")"><span class="glyphicon glyphicon-user"></span> Users</a>
-                                <a href="@Url.Action("ShowPendingOrders","Order")"><span class="glyphicon glyphicon-list"></span> Orders</a>
-                                <a href="@Url.Action("ShowCompletedOrders","Order")"><span class="glyphicon glyphicon-list"></span> Completed Orders</a>
-                                <a href="@Url.Action("CancelledOrders","Order")"><span class="glyphicon glyphicon-remove"></span> Cancelled Orders</a>
-                            }
-                            else
-                            {
-                                <a href="@Url.Action("YourOrders","Shopping")"><span class="glyphicon glyphicon-flag"></span> Your Orders</a>
-                                <a href="@Url.Action("YourOrdersHistory","Shopping")"><span class="glyphicon glyphicon-gift"></span> Your orders history</a>
-                            }
+                        <li>
+                            <div class="dropdown">
+                                <button class="dropbtn">
+                                    <span class="glyphicon glyphicon-user "></span> Hi @Session["uname"]
+                                </button>
+                                <div class="dropdown-content">
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <a href="@Url.Action("UserDetails","User")"><span class="glyphicon glyphicon-user"></span> Users</a>
+                                        <a href="@Url.Action("ShowPendingOrders","Order")"><span class="glyphicon glyphicon-list"></span> Orders</a>
+                                        <a href="@Url.Action("ShowCompletedOrders","Order")"><span class="glyphicon glyphicon-list"></span> Completed Orders</a>
+                                        <a href="@Url.Action("CancelledOrders","Order")"><span class="glyphicon glyphicon-remove"></span> Cancelled Orders</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("YourOrders","Shopping")"><span class="glyphicon glyphicon-flag"></span> Your Orders</a>
+                                        <a href="@Url.Action("YourOrdersHistory","Shopping")"><span class="glyphicon glyphicon-gift"></span> Your orders history</a>
+                                    }
 
-                            <a href="@Url.Action("UpdateProfile","User")"><span class="glyphicon glyphicon-pencil"></span> Update Profile</a>
-                            <a href="@Url.Action("Logout","Account")"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
-                        </div>
-                    </div>
-                </li>
+                                    <a href="@Url.Action("UpdateProfile","User")"><span class="glyphicon glyphicon-pencil"></span> Update Profile</a>
+                                    <a href="@Url.Action("Logout","Account")"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                                </div>
+                            </div>
+                        </li>
                     }
 
                     else
